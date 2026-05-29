@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 ╔══════════════════════════════════════════════════════════════════════════╗
-║     CONVEXITY SENSITIVITY AI AGENT — COMPLETE SINGLE-FILE VERSION      ║
-║                                                                         ║
-║     All 7 Parts in One Executable File with Step-by-Step Guidance       ║
-║                                                                         ║
-║     Usage: python3 convexity_agent_complete.py                          ║
-║     Or run specific parts: python3 convexity_agent_complete.py --part 1 ║
+║ CONVEXITY SENSITIVITY AI AGENT — COMPLETE SINGLE-FILE VERSION ║
+║ ║
+║ All 7 Parts in One Executable File with Step-by-Step Guidance ║
+║ ║
+║ Usage: python3 convexity_agent_complete.py ║
+║ Or run specific parts: python3 convexity_agent_complete.py --part 1 ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 
 HOW TO USE THIS FILE:
@@ -14,22 +14,22 @@ HOW TO USE THIS FILE:
 This file contains the ENTIRE Convexity Sensitivity AI Agent project
 organized into clearly labeled sections. You can:
 
-  1. Run the whole thing:  python3 convexity_agent_complete.py
-  2. Run a specific part:  python3 convexity_agent_complete.py --part 3
-  3. Import in Jupyter:    from convexity_agent_complete import *
-  4. Study step-by-step:   Read each PART section sequentially
+  1. Run the whole thing: python3 convexity_agent_complete.py
+  2. Run a specific part: python3 convexity_agent_complete.py --part 3
+  3. Import in Jupyter: from convexity_agent_complete import *
+  4. Study step-by-step: Read each PART section sequentially
 
 STEP-BY-STEP GUIDE:
 ===================
-  STEP 1:  Read the data loading section (UTILITIES) to understand the data
-  STEP 2:  PART 1 — Learn duration, convexity, DV01 calculations from first principles
-  STEP 3:  PART 2 — Understand yield curve modelling (Nelson-Siegel, PCA)
-  STEP 4:  PART 3 — Explore Monte Carlo simulation (Vasicek, CIR, VaR)
-  STEP 5:  PART 4 — Build ML models (Random Forest, XGBoost, Neural Network)
-  STEP 6:  PART 5 — Generate DAX measures for Power BI
-  STEP 7:  PART 6 — Experience the gamified Bond Risk Lab
-  STEP 8:  PART 7 — Validate everything across shock scenarios
-  STEP 9:  Review outputs in the outputs/ directory
+  STEP 1: Read the data loading section (UTILITIES) to understand the data
+  STEP 2: PART 1 — Learn duration, convexity, DV01 calculations from first principles
+  STEP 3: PART 2 — Understand yield curve modelling (Nelson-Siegel, PCA)
+  STEP 4: PART 3 — Explore Monte Carlo simulation (Vasicek, CIR, VaR)
+  STEP 5: PART 4 — Build ML models (Random Forest, XGBoost, Neural Network)
+  STEP 6: PART 5 — Generate DAX measures for Power BI
+  STEP 7: PART 6 — Experience the gamified Bond Risk Lab
+  STEP 8: PART 7 — Validate everything across shock scenarios
+  STEP 9: Review outputs in the outputs/ directory
 """
 
 import os
@@ -59,11 +59,11 @@ import xgboost as xgb
 warnings.filterwarnings('ignore')
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║                       UTILITIES & DATA LOADING                       ║
-# ║                                                                      ║
-# ║  STEP 1: Understand the data files and helper functions              ║
-# ║                                                                      ║
+# ║ ║
+# ║ UTILITIES & DATA LOADING ║
+# ║ ║
+# ║ STEP 1: Understand the data files and helper functions ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -142,31 +142,31 @@ def fmt_inr(v):
 
 
 def hdr(title, c="═", w=70):
-    print(f"\n{c*w}\n  {title}\n{c*w}\n")
+    print(f"\n{c*w}\n {title}\n{c*w}\n")
 
 
 def sub(title, c="─", w=50):
-    print(f"\n  {c*w}\n  {title}\n  {c*w}\n")
+    print(f"\n {c*w}\n {title}\n {c*w}\n")
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 1: BOND PORTFOLIO DURATION & CONVEXITY ANALYTICS FRAMEWORK   ║
-# ║                                                                      ║
-# ║   STEP 2: Learn how duration, convexity, and DV01 are computed       ║
-# ║   from first principles using cashflow discounting.                   ║
-# ║                                                                      ║
-# ║   KEY CONCEPTS:                                                       ║
-# ║   • Macaulay Duration = weighted avg time to receive cashflows        ║
-# ║   • Modified Duration = D_mac / (1 + y/m) — price sensitivity        ║
-# ║   • Convexity = second derivative of price w.r.t. yield              ║
-# ║   • DV01 = price change for 1 basis point yield move                  ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 1: BOND PORTFOLIO DURATION & CONVEXITY ANALYTICS FRAMEWORK ║
+# ║ ║
+# ║ STEP 2: Learn how duration, convexity, and DV01 are computed ║
+# ║ from first principles using cashflow discounting. ║
+# ║ ║
+# ║ KEY CONCEPTS: ║
+# ║ • Macaulay Duration = weighted avg time to receive cashflows ║
+# ║ • Modified Duration = D_mac / (1 + y/m) — price sensitivity ║
+# ║ • Convexity = second derivative of price w.r.t. yield ║
+# ║ • DV01 = price change for 1 basis point yield move ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 class BondAnalytics:
     """Compute bond risk metrics from first principles."""
-    
+
     def __init__(self, face_value, coupon_rate, coupon_freq, years_to_maturity, ytm):
         self.face_value = face_value
         self.coupon_rate = coupon_rate
@@ -177,22 +177,22 @@ class BondAnalytics:
             face_value, coupon_rate, coupon_freq, years_to_maturity
         )
         self.periodic_yield = ytm / coupon_freq if coupon_freq > 0 else ytm
-    
+
     def dirty_price(self, yield_override=None):
         y = yield_override if yield_override is not None else self.ytm
         return present_value_cashflows(self.cashflows, self.times, y)
-    
+
     def macaulay_duration(self):
         """D_mac = Σ [t × CF × DF(t)] / Price"""
         price = self.dirty_price()
         if price <= 0: return 0.0
         return sum(t * cf * discount_factor(self.ytm, t)
                    for cf, t in zip(self.cashflows, self.times)) / price
-    
+
     def modified_duration(self):
         """D_mod = D_mac / (1 + y/m)"""
         return self.macaulay_duration() / (1 + self.periodic_yield)
-    
+
     def convexity(self):
         """C = [1/P] × Σ [t(t+1/m) × CF × DF(t)] / (1+y/m)²"""
         price = self.dirty_price()
@@ -201,24 +201,24 @@ class BondAnalytics:
         conv_sum = sum(t * (t + 1.0/m) * cf * discount_factor(self.ytm, t)
                        for cf, t in zip(self.cashflows, self.times))
         return conv_sum / (price * (1 + self.periodic_yield) ** 2)
-    
+
     def dv01(self):
         """DV01 = ModDur × Price × 0.0001"""
         return self.modified_duration() * self.dirty_price() * 0.0001
-    
+
     def dv01_per_100_face(self):
         return self.modified_duration() * (self.dirty_price() / self.face_value * 100) * 0.0001
-    
+
     def effective_duration(self, shock_bps=1):
         dy = shock_bps / 10000.0
         p0, p_up, p_down = self.dirty_price(), self.dirty_price(self.ytm + dy), self.dirty_price(self.ytm - dy)
         return (p_down - p_up) / (2 * p0 * dy) if p0 > 0 else 0.0
-    
+
     def effective_convexity(self, shock_bps=1):
         dy = shock_bps / 10000.0
         p0, p_up, p_down = self.dirty_price(), self.dirty_price(self.ytm + dy), self.dirty_price(self.ytm - dy)
         return (p_up + p_down - 2 * p0) / (p0 * dy ** 2) if p0 > 0 else 0.0
-    
+
     def full_metrics(self):
         return {
             'DirtyPrice': self.dirty_price(), 'MacaulayDuration': self.macaulay_duration(),
@@ -230,28 +230,28 @@ class BondAnalytics:
 
 class PortfolioAnalytics:
     """Portfolio-level duration, convexity, and risk analytics."""
-    
+
     def __init__(self, bond_df):
         self.df = bond_df.copy()
         self.df['MarketValue'] = self.df['MarketValue_INR'].astype(float)
         self.total_market_value = self.df['MarketValue'].sum()
         self.df['Weight'] = self.df['MarketValue'] / self.total_market_value
-    
+
     def portfolio_duration(self):
         return (self.df['Weight'] * self.df['ModifiedDuration']).sum()
-    
+
     def portfolio_macaulay_duration(self):
         return (self.df['Weight'] * self.df['MacaulayDuration']).sum()
-    
+
     def portfolio_convexity(self):
         return (self.df['Weight'] * self.df['Convexity']).sum()
-    
+
     def portfolio_dv01(self):
         return (self.df['ModifiedDuration'] * self.df['MarketValue'] * 0.0001).sum()
-    
+
     def portfolio_ytm(self):
         return (self.df['Weight'] * self.df['YieldToMaturity']).sum()
-    
+
     def duration_contribution_by(self, group_col):
         return self.df.groupby(group_col).apply(
             lambda g: pd.Series({
@@ -262,7 +262,7 @@ class PortfolioAnalytics:
             }),
             include_groups=False
         ).reset_index().sort_values('Duration_Contribution', ascending=False)
-    
+
     def key_rate_duration_profile(self):
         if 'KeyRateBucket' not in self.df.columns: return pd.DataFrame()
         krd = self.df.groupby('KeyRateBucket').apply(
@@ -273,7 +273,7 @@ class PortfolioAnalytics:
         order = ['0-2Y','2-3Y','3-5Y','5-7Y','7-10Y','10-15Y','15-20Y','20Y+']
         krd['Sort'] = krd['KeyRateBucket'].apply(lambda x: order.index(x) if x in order else 99)
         return krd.sort_values('Sort').drop(columns='Sort')
-    
+
     def price_sensitivity_analysis(self, shocks=None):
         if shocks is None: shocks = [-200, -100, -50, -25, 25, 50, 100, 200]
         d, c, mv = self.portfolio_duration(), self.portfolio_convexity(), self.total_market_value
@@ -284,7 +284,7 @@ class PortfolioAnalytics:
             results.append({'Shock_bps': s, 'Pct_Change': pct, 'Total_PnL_INR': pct * mv,
                            'Duration_Effect_INR': -d * dy * mv, 'Convexity_Effect_INR': 0.5 * c * dy**2 * mv})
         return pd.DataFrame(results)
-    
+
     def summary(self):
         return {
             'Total_Market_Value_INR': self.total_market_value, 'Number_of_Bonds': len(self.df),
@@ -299,27 +299,27 @@ def run_part1():
     """Execute Part 1."""
     hdr("PART 1: Bond Portfolio Duration & Convexity Analytics Framework")
     df = load_bond_portfolio()
-    print(f"  📂 Loaded {len(df)} bonds\n")
-    
+    print(f" Loaded {len(df)} bonds\n")
+
     portfolio = PortfolioAnalytics(df)
     s = portfolio.summary()
     for k, v in s.items():
-        if 'INR' in k: print(f"  {k:.<45} {fmt_inr(v)}")
-        elif 'YTM' in k: print(f"  {k:.<45} {fmt_pct(v)}")
-        else: print(f"  {k:.<45} {v:.4f}" if isinstance(v, float) else f"  {k:.<45} {v}")
-    
+        if 'INR' in k: print(f" {k:.<45} {fmt_inr(v)}")
+        elif 'YTM' in k: print(f" {k:.<45} {fmt_pct(v)}")
+        else: print(f" {k:.<45} {v:.4f}" if isinstance(v, float) else f" {k:.<45} {v}")
+
     sub("Sector Duration Contribution")
     print(portfolio.duration_contribution_by('Sector')[['Sector','Count','Duration_Contribution','DV01_Contribution']].to_string(index=False))
-    
+
     sub("Key Rate Duration Profile")
     krd = portfolio.key_rate_duration_profile()
     if not krd.empty: print(krd.to_string(index=False))
-    
+
     sub("Price Sensitivity Analysis")
     sens = portfolio.price_sensitivity_analysis()
     for _, r in sens.iterrows():
-        print(f"  {r['Shock_bps']:+4.0f} bps → P&L: {fmt_inr(r['Total_PnL_INR']):>15} ({r['Pct_Change']*100:+.4f}%)")
-    
+        print(f" {r['Shock_bps']:+4.0f} bps → P&L: {fmt_inr(r['Total_PnL_INR']):>15} ({r['Pct_Change']*100:+.4f}%)")
+
     sub("Verification: Computed vs CSV (10 sample bonds)")
     np.random.seed(42)
     for idx in np.random.choice(len(df), 10, replace=False):
@@ -328,8 +328,8 @@ def run_part1():
                              row['YearsToMaturity'], row['YieldToMaturity'])
         m = bond.full_metrics()
         dur_err = abs(m['ModifiedDuration'] - row['ModifiedDuration'])
-        print(f"  {row['BondID']}: CSV={row['ModifiedDuration']:.4f} Computed={m['ModifiedDuration']:.4f} Error={dur_err:.4f}")
-    
+        print(f" {row['BondID']}: CSV={row['ModifiedDuration']:.4f} Computed={m['ModifiedDuration']:.4f} Error={dur_err:.4f}")
+
     # Visualizations
     sub("Generating Visualizations")
     fig, ax = plt.subplots(figsize=(12,8))
@@ -342,38 +342,38 @@ def run_part1():
     plt.tight_layout()
     fig.savefig(FIGURES_DIR / "p1_duration_vs_convexity.png", dpi=150, bbox_inches='tight')
     plt.close(fig)
-    print(f"  📊 Saved: {FIGURES_DIR / 'p1_duration_vs_convexity.png'}")
-    
+    print(f" Saved: {FIGURES_DIR / 'p1_duration_vs_convexity.png'}")
+
     sens.to_csv(REPORTS_DIR / "part1_sensitivity_analysis.csv", index=False)
-    hdr("PART 1 COMPLETE ✓")
+    hdr("PART 1 COMPLETE ")
     return portfolio, df
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 2: YIELD CURVE MODELLING & DV01 SENSITIVITY CALCULATIONS     ║
-# ║                                                                      ║
-# ║   STEP 3: Understand yield curve fitting and DV01 sensitivity        ║
-# ║                                                                      ║
-# ║   KEY CONCEPTS:                                                       ║
-# ║   • Nelson-Siegel-Svensson model decomposes curve into level,        ║
-# ║     slope, and curvature factors                                      ║
-# ║   • DV01 ladder shows portfolio sensitivity at each tenor             ║
-# ║   • PCA extracts the dominant yield curve movement patterns           ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 2: YIELD CURVE MODELLING & DV01 SENSITIVITY CALCULATIONS ║
+# ║ ║
+# ║ STEP 3: Understand yield curve fitting and DV01 sensitivity ║
+# ║ ║
+# ║ KEY CONCEPTS: ║
+# ║ • Nelson-Siegel-Svensson model decomposes curve into level, ║
+# ║ slope, and curvature factors ║
+# ║ • DV01 ladder shows portfolio sensitivity at each tenor ║
+# ║ • PCA extracts the dominant yield curve movement patterns ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 class NelsonSiegelSvensson:
     """NSS 6-parameter yield curve model."""
     def __init__(self): self.params = None; self.fitted = False
-    
+
     @staticmethod
     def _yield(t, b0, b1, b2, b3, t1, t2):
         t = np.maximum(np.asarray(t, dtype=float), 1e-6)
         x1, x2 = t/t1, t/t2
         f1 = (1-np.exp(-x1))/x1
         return b0 + b1*f1 + b2*(f1-np.exp(-x1)) + b3*((1-np.exp(-x2))/x2-np.exp(-x2))
-    
+
     def fit(self, tenors, yields):
         tenors, yields = np.asarray(tenors, dtype=float), np.asarray(yields, dtype=float)
         def obj(p):
@@ -383,10 +383,10 @@ class NelsonSiegelSvensson:
         res = minimize(obj, x0, method='L-BFGS-B',
                        bounds=[(0,0.2),(-0.2,0.2),(-0.2,0.2),(-0.2,0.2),(0.1,30),(0.1,30)])
         self.params = res.x; self.fitted = True; return self
-    
+
     def predict(self, tenors):
         return self._yield(tenors, *self.params)
-    
+
     def get_factors(self):
         names = ['Level(β0)','Slope(β1)','Curve1(β2)','Curve2(β3)','Decay1(τ1)','Decay2(τ2)']
         return dict(zip(names, self.params))
@@ -408,22 +408,22 @@ def run_part2():
     """Execute Part 2."""
     hdr("PART 2: Yield Curve Modelling & DV01 Sensitivity")
     bond_df, yc_df = load_bond_portfolio(), load_yield_curve()
-    
+
     latest = yc_df[yc_df['CurveDate'] == yc_df['CurveDate'].max()].sort_values('Tenor_Years')
     tenors, yields = latest['Tenor_Years'].values, latest['Yield'].values
-    
+
     sub("Nelson-Siegel-Svensson Fitting")
     nss = NelsonSiegelSvensson()
     nss.fit(tenors, yields)
-    for k, v in nss.get_factors().items(): print(f"  {k:.<25} {v:.6f}")
+    for k, v in nss.get_factors().items(): print(f" {k:.<25} {v:.6f}")
     rmse = np.sqrt(np.mean((nss.predict(tenors) - yields)**2))
-    print(f"  RMSE: {rmse:.8f}")
-    
+    print(f" RMSE: {rmse:.8f}")
+
     sub("DV01 Ladder")
     ladder = compute_dv01_ladder(bond_df)
     print(ladder.to_string(index=False))
-    print(f"\n  Total Portfolio DV01: {fmt_inr(ladder['Total_DV01'].sum())}")
-    
+    print(f"\n Total Portfolio DV01: {fmt_inr(ladder['Total_DV01'].sum())}")
+
     sub("Yield Curve PCA")
     pivot = yc_df.pivot_table(values='Yield', index='CurveDate', columns='Tenor_Years').dropna()
     changes = pivot.diff().dropna()
@@ -434,9 +434,9 @@ def run_part2():
         pca.fit(scaled)
         names = ['Level(PC1)', 'Slope(PC2)', 'Curvature(PC3)']
         for n, v in zip(names, pca.explained_variance_ratio_):
-            print(f"  {n:.<25} {v*100:.2f}%")
-        print(f"  Cumulative:              {sum(pca.explained_variance_ratio_)*100:.2f}%")
-    
+            print(f" {n:.<25} {v*100:.2f}%")
+        print(f" Cumulative: {sum(pca.explained_variance_ratio_)*100:.2f}%")
+
     # Visualizations
     fig, ax = plt.subplots(figsize=(10,6))
     smooth = np.linspace(min(tenors), max(tenors), 200)
@@ -446,30 +446,30 @@ def run_part2():
     ax.set_title('NSS Yield Curve Fit', fontweight='bold')
     ax.legend(); ax.grid(True, alpha=0.3); plt.tight_layout()
     fig.savefig(FIGURES_DIR / "p2_nss_fit.png", dpi=150, bbox_inches='tight'); plt.close(fig)
-    print(f"  📊 Saved: {FIGURES_DIR/'p2_nss_fit.png'}")
-    
+    print(f" Saved: {FIGURES_DIR/'p2_nss_fit.png'}")
+
     ladder.to_csv(REPORTS_DIR / "part2_dv01_ladder.csv", index=False)
-    hdr("PART 2 COMPLETE ✓")
+    hdr("PART 2 COMPLETE ")
     return nss, ladder
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 3: MONTE CARLO SIMULATION FOR INTEREST RATE SCENARIOS         ║
-# ║                                                                      ║
-# ║   STEP 4: Simulate interest rate paths and compute portfolio risk    ║
-# ║                                                                      ║
-# ║   KEY CONCEPTS:                                                       ║
-# ║   • Vasicek: dr = κ(θ-r)dt + σdW (mean-reverting, can go negative)  ║
-# ║   • CIR: dr = κ(θ-r)dt + σ√r dW (non-negative rates)               ║
-# ║   • VaR: max loss at confidence level; CVaR: expected tail loss      ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 3: MONTE CARLO SIMULATION FOR INTEREST RATE SCENARIOS ║
+# ║ ║
+# ║ STEP 4: Simulate interest rate paths and compute portfolio risk ║
+# ║ ║
+# ║ KEY CONCEPTS: ║
+# ║ • Vasicek: dr = κ(θ-r)dt + σdW (mean-reverting, can go negative) ║
+# ║ • CIR: dr = κ(θ-r)dt + σ√r dW (non-negative rates) ║
+# ║ • VaR: max loss at confidence level; CVaR: expected tail loss ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 class VasicekModel:
     def __init__(self, kappa=0.5, theta=0.065, sigma=0.01, r0=0.065):
         self.kappa, self.theta, self.sigma, self.r0 = kappa, theta, sigma, r0
-    
+
     def calibrate(self, rates, dt=1/252):
         rates = np.asarray(rates, dtype=float)
         dr, r_lag = np.diff(rates), rates[:-1]
@@ -480,7 +480,7 @@ class VasicekModel:
         self.sigma = np.std(dr - X@beta) / np.sqrt(dt)
         self.r0 = rates[-1]
         return self
-    
+
     def simulate(self, T=1.0, n_steps=252, n_paths=1000, seed=42):
         np.random.seed(seed)
         dt = T/n_steps
@@ -496,7 +496,7 @@ class VasicekModel:
 class CIRModel:
     def __init__(self, kappa=0.5, theta=0.065, sigma=0.05, r0=0.065):
         self.kappa, self.theta, self.sigma, self.r0 = kappa, theta, sigma, r0
-    
+
     def simulate(self, T=1.0, n_steps=252, n_paths=1000, seed=42):
         np.random.seed(seed)
         dt = T/n_steps
@@ -540,34 +540,34 @@ def run_part3():
     """Execute Part 3."""
     hdr("PART 3: Monte Carlo Simulation for Interest Rate Scenario Analysis")
     bond_df, mc_df, yc_df = load_bond_portfolio(), load_monte_carlo(), load_yield_curve()
-    
+
     mv = bond_df['MarketValue_INR'].sum()
     w = bond_df['MarketValue_INR']/mv
     d, c = (w*bond_df['ModifiedDuration']).sum(), (w*bond_df['Convexity']).sum()
-    
+
     sub("Vasicek Model Simulation")
     rates = yc_df[yc_df['Tenor_Years']==0.25].sort_values('CurveDate')['Yield'].values
     vas = VasicekModel()
     if len(rates) > 10: vas.calibrate(rates)
-    print(f"  κ={vas.kappa:.4f} θ={vas.theta:.4f} σ={vas.sigma:.4f} r₀={vas.r0:.4f}")
-    
+    print(f" κ={vas.kappa:.4f} θ={vas.theta:.4f} σ={vas.sigma:.4f} r₀={vas.r0:.4f}")
+
     times_v, paths_v = vas.simulate(T=2.0, n_steps=504, n_paths=5000)
-    print(f"  5000 paths: terminal mean={np.mean(paths_v[:,-1])*100:.2f}%")
-    
+    print(f" 5000 paths: terminal mean={np.mean(paths_v[:,-1])*100:.2f}%")
+
     sub("CIR Model Simulation")
     cir = CIRModel(kappa=vas.kappa, theta=vas.theta, sigma=max(vas.sigma*3, 0.03), r0=vas.r0)
     times_c, paths_c = cir.simulate(T=2.0, n_steps=504, n_paths=5000)
-    print(f"  5000 paths: terminal mean={np.mean(paths_c[:,-1])*100:.2f}%")
-    
+    print(f" 5000 paths: terminal mean={np.mean(paths_c[:,-1])*100:.2f}%")
+
     sub("VaR & CVaR (Provided MC Data)")
     var_results = compute_var_cvar(mc_df['PnL_Total_INR'].values)
     print(var_results.to_string(index=False))
-    
+
     sub("Stress Tests")
     st_results = stress_tests(d, c, mv)
     for _, r in st_results.iterrows():
-        print(f"  {r['Scenario']:<25} {r['Shift_bps']:+4.0f} bps → {fmt_inr(r['Total_PnL_INR']):>15} ({r['PnL_Pct']:+.2f}%)")
-    
+        print(f" {r['Scenario']:<25} {r['Shift_bps']:+4.0f} bps → {fmt_inr(r['Total_PnL_INR']):>15} ({r['PnL_Pct']:+.2f}%)")
+
     # Visualization
     fig, ax = plt.subplots(figsize=(12,6))
     for i in range(min(30, 5000)):
@@ -577,26 +577,26 @@ def run_part3():
     ax.set_title('Vasicek: Simulated Rate Paths', fontweight='bold')
     ax.legend(); ax.grid(True, alpha=0.3); plt.tight_layout()
     fig.savefig(FIGURES_DIR / "p3_vasicek_paths.png", dpi=150); plt.close(fig)
-    
+
     var_results.to_csv(REPORTS_DIR / "part3_var_analysis.csv", index=False)
     st_results.to_csv(REPORTS_DIR / "part3_stress_tests.csv", index=False)
-    hdr("PART 3 COMPLETE ✓")
+    hdr("PART 3 COMPLETE ")
     return var_results, st_results
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 4: ML MODELS FOR CONVEXITY PREDICTION                         ║
-# ║                                                                      ║
-# ║   STEP 5: Build Random Forest, XGBoost, and Neural Network models   ║
-# ║                                                                      ║
-# ║   KEY CONCEPTS:                                                       ║
-# ║   • Feature engineering: derive useful predictors from bond data      ║
-# ║   • Random Forest: ensemble of decision trees, robust baseline        ║
-# ║   • XGBoost: gradient-boosted trees, state-of-the-art tabular ML    ║
-# ║   • Neural Network: deep learning with batch norm and dropout         ║
-# ║   • Ensemble: weighted combination of all models                      ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 4: ML MODELS FOR CONVEXITY PREDICTION ║
+# ║ ║
+# ║ STEP 5: Build Random Forest, XGBoost, and Neural Network models ║
+# ║ ║
+# ║ KEY CONCEPTS: ║
+# ║ • Feature engineering: derive useful predictors from bond data ║
+# ║ • Random Forest: ensemble of decision trees, robust baseline ║
+# ║ • XGBoost: gradient-boosted trees, state-of-the-art tabular ML ║
+# ║ • Neural Network: deep learning with batch norm and dropout ║
+# ║ • Ensemble: weighted combination of all models ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 def engineer_features(df):
@@ -605,21 +605,21 @@ def engineer_features(df):
     feats = ['CouponRate','YearsToMaturity','YieldToMaturity','MacaulayDuration','ModifiedDuration',
              'FaceValue','CleanPrice','DirtyPrice','AccruedInterest','DV01_Per100Face',
              'SpreadOverBenchmark_bps','OAS_bps','ZSpread_bps','CouponFrequency']
-    
+
     f['Coupon_Yield_Spread'] = f['CouponRate'] - f['YieldToMaturity']
     f['Duration_Maturity_Ratio'] = f['ModifiedDuration'] / f['YearsToMaturity'].clip(lower=0.1)
     f['Duration_Squared'] = f['ModifiedDuration'] ** 2
     f['Maturity_Squared'] = f['YearsToMaturity'] ** 2
     f['YTM_Duration'] = f['YieldToMaturity'] * f['ModifiedDuration']
     f['Log_Maturity'] = np.log1p(f['YearsToMaturity'])
-    
+
     derived = ['Coupon_Yield_Spread','Duration_Maturity_Ratio','Duration_Squared',
                'Maturity_Squared','YTM_Duration','Log_Maturity']
-    
+
     f['Sector_Enc'] = LabelEncoder().fit_transform(f['Sector'].astype(str))
     f['Rating_Enc'] = LabelEncoder().fit_transform(f['CreditRating'].astype(str))
     f['IsCallable_F'] = f['IsCallable'].astype(int)
-    
+
     all_f = feats + derived + ['Sector_Enc','Rating_Enc','IsCallable_F']
     X = f[all_f].fillna(0)
     y = f['Convexity']
@@ -631,15 +631,15 @@ def run_part4():
     hdr("PART 4: ML Models for Convexity Prediction")
     df = load_bond_portfolio()
     X, y, feat_names = engineer_features(df)
-    
-    print(f"  Features: {len(feat_names)}, Samples: {len(X)}")
-    print(f"  Target (Convexity): mean={y.mean():.2f}, std={y.std():.2f}")
-    
+
+    print(f" Features: {len(feat_names)}, Samples: {len(X)}")
+    print(f" Target (Convexity): mean={y.mean():.2f}, std={y.std():.2f}")
+
     X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
     scaler = StandardScaler()
     X_tr_s = pd.DataFrame(scaler.fit_transform(X_tr), columns=X_tr.columns, index=X_tr.index)
     X_te_s = pd.DataFrame(scaler.transform(X_te), columns=X_te.columns, index=X_te.index)
-    
+
     # Random Forest
     sub("Random Forest Regressor")
     rf = RandomForestRegressor(n_estimators=200, max_depth=20, random_state=42, n_jobs=-1)
@@ -647,8 +647,8 @@ def run_part4():
     rf_pred = rf.predict(X_te)
     rf_r2 = r2_score(y_te, rf_pred)
     rf_rmse = np.sqrt(mean_squared_error(y_te, rf_pred))
-    print(f"  R²={rf_r2:.6f}  RMSE={rf_rmse:.4f}  MAE={mean_absolute_error(y_te, rf_pred):.4f}")
-    
+    print(f" R²={rf_r2:.6f} RMSE={rf_rmse:.4f} MAE={mean_absolute_error(y_te, rf_pred):.4f}")
+
     # XGBoost
     sub("XGBoost Regressor")
     xgb_m = xgb.XGBRegressor(n_estimators=200, max_depth=6, learning_rate=0.1,
@@ -657,8 +657,8 @@ def run_part4():
     xgb_pred = xgb_m.predict(X_te)
     xgb_r2 = r2_score(y_te, xgb_pred)
     xgb_rmse = np.sqrt(mean_squared_error(y_te, xgb_pred))
-    print(f"  R²={xgb_r2:.6f}  RMSE={xgb_rmse:.4f}  MAE={mean_absolute_error(y_te, xgb_pred):.4f}")
-    
+    print(f" R²={xgb_r2:.6f} RMSE={xgb_rmse:.4f} MAE={mean_absolute_error(y_te, xgb_pred):.4f}")
+
     # Neural Network
     sub("Neural Network")
     nn_pred = None
@@ -668,8 +668,8 @@ def run_part4():
         tf.get_logger().setLevel('ERROR')
         from tensorflow import keras
         from tensorflow.keras import layers
-        
-        print("  Using TensorFlow/Keras backend")
+
+        print(" Using TensorFlow/Keras backend")
         nn = keras.Sequential([
             layers.Input(shape=(X_tr_s.shape[1],)),
             layers.Dense(128, activation='relu'), layers.BatchNormalization(), layers.Dropout(0.3),
@@ -681,24 +681,24 @@ def run_part4():
                callbacks=[keras.callbacks.EarlyStopping(monitor='val_loss', patience=15, restore_best_weights=True)])
         nn_pred = nn.predict(X_te_s, verbose=0).flatten()
     except Exception as e:
-        print(f"  ⚠️ TensorFlow unavailable ({type(e).__name__}), using sklearn MLPRegressor")
+        print(f" ️ TensorFlow unavailable ({type(e).__name__}), using sklearn MLPRegressor")
         from sklearn.neural_network import MLPRegressor
         nn = MLPRegressor(hidden_layer_sizes=(128, 64, 32, 16), max_iter=500,
                           early_stopping=True, random_state=42, learning_rate='adaptive')
         nn.fit(X_tr_s, y_tr)
         nn_pred = nn.predict(X_te_s)
-    
+
     nn_r2 = r2_score(y_te, nn_pred)
     nn_rmse = np.sqrt(mean_squared_error(y_te, nn_pred))
-    print(f"  R²={nn_r2:.6f}  RMSE={nn_rmse:.4f}  MAE={mean_absolute_error(y_te, nn_pred):.4f}")
-    
+    print(f" R²={nn_r2:.6f} RMSE={nn_rmse:.4f} MAE={mean_absolute_error(y_te, nn_pred):.4f}")
+
     # Ensemble
     sub("Ensemble Model (0.3×RF + 0.4×XGB + 0.3×NN)")
     ens_pred = 0.3*rf_pred + 0.4*xgb_pred + 0.3*nn_pred
     ens_r2 = r2_score(y_te, ens_pred)
     ens_rmse = np.sqrt(mean_squared_error(y_te, ens_pred))
-    print(f"  R²={ens_r2:.6f}  RMSE={ens_rmse:.4f}  MAE={mean_absolute_error(y_te, ens_pred):.4f}")
-    
+    print(f" R²={ens_r2:.6f} RMSE={ens_rmse:.4f} MAE={mean_absolute_error(y_te, ens_pred):.4f}")
+
     # Model Comparison
     sub("Model Comparison")
     comp = pd.DataFrame([
@@ -708,12 +708,12 @@ def run_part4():
         {'Model': 'Ensemble', 'R2': ens_r2, 'RMSE': ens_rmse},
     ])
     print(comp.to_string(index=False))
-    
+
     # Feature importance
     sub("Top 10 Features (XGBoost)")
     imp = pd.DataFrame({'Feature': feat_names, 'Importance': xgb_m.feature_importances_})
     print(imp.sort_values('Importance', ascending=False).head(10).to_string(index=False))
-    
+
     # Visualization
     fig, axes = plt.subplots(1, 4, figsize=(20, 5))
     for ax, (name, pred) in zip(axes, [('RF', rf_pred), ('XGB', xgb_pred), ('NN', nn_pred), ('Ensemble', ens_pred)]):
@@ -725,25 +725,25 @@ def run_part4():
         ax.grid(True, alpha=0.3)
     plt.tight_layout()
     fig.savefig(FIGURES_DIR / "p4_actual_vs_predicted.png", dpi=150); plt.close(fig)
-    
+
     comp.to_csv(REPORTS_DIR / "part4_model_comparison.csv", index=False)
-    hdr("PART 4 COMPLETE ✓")
+    hdr("PART 4 COMPLETE ")
     return comp
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 5: POWER BI DAX MEASURES & DASHBOARD DATA EXPORT             ║
-# ║                                                                      ║
-# ║   STEP 6: Generate DAX formulas and export data for Power BI         ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 5: POWER BI DAX MEASURES & DASHBOARD DATA EXPORT ║
+# ║ ║
+# ║ STEP 6: Generate DAX formulas and export data for Power BI ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 def run_part5():
     """Execute Part 5."""
     hdr("PART 5: Power BI DAX Measures & Dashboard Data Export")
     bond_df, mc_df = load_bond_portfolio(), load_monte_carlo()
-    
+
     dax = {
         'Portfolio Modified Duration': 'SUMX(Bonds, Bonds[ModifiedDuration]*Bonds[MarketValue_INR]) / SUM(Bonds[MarketValue_INR])',
         'Portfolio Convexity': 'SUMX(Bonds, Bonds[Convexity]*Bonds[MarketValue_INR]) / SUM(Bonds[MarketValue_INR])',
@@ -758,12 +758,12 @@ def run_part5():
         'Sector Weight': 'DIVIDE(SUM(Bonds[MarketValue_INR]), CALCULATE(SUM(Bonds[MarketValue_INR]),ALL(Bonds[Sector])))',
         'Weighted Spread': 'SUMX(Bonds, Bonds[SpreadOverBenchmark_bps]*Bonds[MarketValue_INR]) / SUM(Bonds[MarketValue_INR])',
     }
-    
+
     sub(f"DAX Measures ({len(dax)} formulas)")
     for name, formula in dax.items():
-        print(f"\n  📐 {name}")
-        print(f"     {formula}")
-    
+        print(f"\n {name}")
+        print(f" {formula}")
+
     sub("Exporting Power BI Data Files")
     mv = bond_df['MarketValue_INR'].sum()
     bond_df_export = bond_df.copy()
@@ -771,8 +771,8 @@ def run_part5():
     bond_df_export['BondDV01'] = bond_df_export['ModifiedDuration'] * bond_df_export['MarketValue_INR'] * 0.0001
     bond_df_export.to_csv(POWERBI_DIR / "pbi_bond_portfolio.csv", index=False)
     mc_df.to_csv(POWERBI_DIR / "pbi_monte_carlo.csv", index=False)
-    print(f"  ✅ Exported to {POWERBI_DIR}")
-    
+    print(f" Exported to {POWERBI_DIR}")
+
     # Save DAX doc
     doc_path = PROJECT_ROOT / "docs"
     doc_path.mkdir(exist_ok=True)
@@ -780,18 +780,18 @@ def run_part5():
         f.write("# Power BI DAX Measures Reference\n\n")
         for name, formula in dax.items():
             f.write(f"## {name}\n```dax\n{formula}\n```\n\n")
-    print(f"  📄 DAX documentation saved")
-    
-    hdr("PART 5 COMPLETE ✓")
+    print(f" DAX documentation saved")
+
+    hdr("PART 5 COMPLETE ")
     return dax
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 6: BOND RISK LAB — GAMIFIED SIMULATION PLATFORM              ║
-# ║                                                                      ║
-# ║   STEP 7: Interactive training with scenarios, quiz, achievements    ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 6: BOND RISK LAB — GAMIFIED SIMULATION PLATFORM ║
+# ║ ║
+# ║ STEP 7: Interactive training with scenarios, quiz, achievements ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 QUIZ = [
@@ -813,10 +813,10 @@ QUIZ = [
 ]
 
 ACHIEVEMENTS = {
-    "duration_master": ("🏆", "Duration Master", 100, "Predict 5 scenarios correctly"),
-    "convexity_ninja": ("🥷", "Convexity Ninja", 150, "Identify convexity advantages"),
-    "yield_wizard": ("🧙", "Yield Curve Wizard", 120, "Classify yield movements"),
-    "risk_manager": ("🛡️", "Risk Manager", 200, "Hedge duration within ±0.5"),
+    "duration_master": ("", "Duration Master", 100, "Predict 5 scenarios correctly"),
+    "convexity_ninja": ("", "Convexity Ninja", 150, "Identify convexity advantages"),
+    "yield_wizard": ("", "Yield Curve Wizard", 120, "Classify yield movements"),
+    "risk_manager": ("️", "Risk Manager", 200, "Hedge duration within ±0.5"),
     "perfect_score": ("⭐", "Perfect Score", 250, "100% on quiz"),
 }
 
@@ -825,68 +825,68 @@ def run_part6():
     """Execute Part 6."""
     hdr("PART 6: Bond Risk Lab — Gamified Simulation Platform")
     df = load_bond_portfolio()
-    
+
     mv = df['MarketValue_INR'].sum()
     w = df['MarketValue_INR']/mv
     d, c = (w*df['ModifiedDuration']).sum(), (w*df['Convexity']).sum()
-    
+
     sub("Scenario Challenge Demo")
     score = 0
     for diff, shock in [("Easy", 50), ("Medium", -100), ("Hard", 200)]:
         dy = shock / 10000
         pnl = (-d*dy + 0.5*c*dy**2) * mv
         direction = 'GAIN' if pnl > 0 else 'LOSS'
-        print(f"  [{diff}] Shock: {shock:+d} bps → {direction}: {fmt_inr(abs(pnl))} ({pnl/mv*100:+.4f}%)")
-        print(f"    Duration effect: {fmt_inr(-d*dy*mv)} | Convexity effect: {fmt_inr(0.5*c*dy**2*mv)}")
+        print(f" [{diff}] Shock: {shock:+d} bps → {direction}: {fmt_inr(abs(pnl))} ({pnl/mv*100:+.4f}%)")
+        print(f" Duration effect: {fmt_inr(-d*dy*mv)} | Convexity effect: {fmt_inr(0.5*c*dy**2*mv)}")
         score += 30
-    
+
     sub("Quiz Sample")
     for i, q in enumerate(QUIZ[:3]):
-        print(f"  Q{i+1}: {q['q']}")
-        print(f"  ✅ Answer: {q['a']}")
-        print(f"     💡 {q['explanation']}\n")
-    
+        print(f" Q{i+1}: {q['q']}")
+        print(f" Answer: {q['a']}")
+        print(f" {q['explanation']}\n")
+
     sub("Achievements")
     for aid, (icon, name, pts, desc) in ACHIEVEMENTS.items():
-        print(f"  {icon} {name} (+{pts} pts) — {desc}")
-    
+        print(f" {icon} {name} (+{pts} pts) — {desc}")
+
     sub("Risk Profiles")
     profiles = [
-        ("🛡️ Conservative", 3.0, "Low duration, capital preservation"),
-        ("⚖️ Moderate", 5.5, "Balanced risk-return"),
-        ("🚀 Aggressive", 9.0, "Long duration, yield chasing"),
-        ("🏋️ Barbell", 6.0, "Short + long mix, high convexity"),
+        ("️ Conservative", 3.0, "Low duration, capital preservation"),
+        ("️ Moderate", 5.5, "Balanced risk-return"),
+        (" Aggressive", 9.0, "Long duration, yield chasing"),
+        ("️ Barbell", 6.0, "Short + long mix, high convexity"),
     ]
     for icon_name, dur, desc in profiles:
-        print(f"  {icon_name}: Target Duration={dur} — {desc}")
-    
-    print(f"\n  🎮 Demo Score: {score}")
-    
+        print(f" {icon_name}: Target Duration={dur} — {desc}")
+
+    print(f"\n Demo Score: {score}")
+
     session = {'quiz': QUIZ, 'achievements': ACHIEVEMENTS}
     with open(REPORTS_DIR / "part6_game_config.json", 'w') as f:
         json.dump(session, f, indent=2, default=str)
-    
-    hdr("PART 6 COMPLETE ✓")
+
+    hdr("PART 6 COMPLETE ")
     return score
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║   PART 7: AI AGENT VALIDATION ACROSS YIELD CURVE SHOCK SCENARIOS    ║
-# ║                                                                      ║
-# ║   STEP 8: Comprehensive validation of all calculations               ║
-# ║                                                                      ║
+# ║ ║
+# ║ PART 7: AI AGENT VALIDATION ACROSS YIELD CURVE SHOCK SCENARIOS ║
+# ║ ║
+# ║ STEP 8: Comprehensive validation of all calculations ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 def run_part7():
     """Execute Part 7."""
     hdr("PART 7: AI Agent Validation Across Yield Curve Shock Scenarios")
     df, mc_df = load_bond_portfolio(), load_monte_carlo()
-    
+
     mv = df['MarketValue_INR'].sum()
     w = df['MarketValue_INR']/mv
     d, c = (w*df['ModifiedDuration']).sum(), (w*df['Convexity']).sum()
-    
+
     # Test 1: Bond-level accuracy
     sub("Test 1: Bond-Level Calculation Accuracy")
     np.random.seed(42)
@@ -897,8 +897,8 @@ def run_part7():
                              row['YearsToMaturity'], row['YieldToMaturity'])
         m = bond.full_metrics()
         errors.append(abs(m['ModifiedDuration'] - row['ModifiedDuration']))
-    print(f"  30 bonds tested: Mean Duration Error = {np.mean(errors):.4f}")
-    
+    print(f" 30 bonds tested: Mean Duration Error = {np.mean(errors):.4f}")
+
     # Test 2: Duration-Convexity approximation
     sub("Test 2: Duration-Convexity Approximation vs Actual")
     for col, s in [('PriceChange_Up100bps', 100), ('PriceChange_Dn100bps', -100)]:
@@ -906,8 +906,8 @@ def run_part7():
         approx = (-df['ModifiedDuration']*dy + 0.5*df['Convexity']*dy**2) * 100
         actual = df[col]
         corr = np.corrcoef(approx, actual)[0,1]
-        print(f"  {s:+d} bps: Correlation = {corr:.6f}")
-    
+        print(f" {s:+d} bps: Correlation = {corr:.6f}")
+
     # Test 3: Portfolio consistency
     sub("Test 3: Portfolio Consistency Checks")
     portfolio = PortfolioAnalytics(df)
@@ -918,60 +918,60 @@ def run_part7():
         ("ModDur ≤ MacDur", portfolio.portfolio_duration() <= portfolio.portfolio_macaulay_duration() + 0.01),
     ]
     for name, passed in checks:
-        print(f"  {'✅' if passed else '❌'} {name}")
-    
+        print(f" {'' if passed else ''} {name}")
+
     # Test 4: Multi-scenario shocks
     sub("Test 4: Multi-Scenario Shock Validation")
-    print(f"  {'Shock':>8} | {'Duration PnL':>14} | {'D+C PnL':>14} | {'Conv Benefit':>12}")
-    print(f"  {'-'*8}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}")
+    print(f" {'Shock':>8} | {'Duration PnL':>14} | {'D+C PnL':>14} | {'Conv Benefit':>12}")
+    print(f" {'-'*8}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}")
     for s in [-200, -100, -50, 50, 100, 200]:
         dy = s/10000
         dur_pnl = -d*dy*mv
         dc_pnl = (-d*dy + 0.5*c*dy**2)*mv
         conv_b = 0.5*c*dy**2*mv
-        print(f"  {s:+4d} bps | ₹{dur_pnl/1e5:+10.1f}L | ₹{dc_pnl/1e5:+10.1f}L | ₹{conv_b/1e5:+8.1f}L")
-    
+        print(f" {s:+4d} bps | ₹{dur_pnl/1e5:+10.1f}L | ₹{dc_pnl/1e5:+10.1f}L | ₹{conv_b/1e5:+8.1f}L")
+
     # Test 5: Historical replay
     sub("Test 5: Historical Scenario Replay")
     for name, s in [("2013 Taper Tantrum",150), ("2020 COVID",-200), ("2022 Rate Hikes",250)]:
         dy = s/10000
         pnl = (-d*dy + 0.5*c*dy**2)*mv
-        print(f"  📅 {name}: {s:+d} bps → {fmt_inr(pnl)} ({pnl/mv*100:+.2f}%)")
-    
+        print(f" {name}: {s:+d} bps → {fmt_inr(pnl)} ({pnl/mv*100:+.2f}%)")
+
     # Test 6: MC cross-validation
     sub("Test 6: MC vs Analytical Cross-Validation")
     dy_mc = mc_df['ParallelShift_bps']/10000
     analytical = (-d*dy_mc + 0.5*c*dy_mc**2)*mv
     corr = np.corrcoef(analytical, mc_df['PnL_Total_INR'])[0,1]
     err = (analytical - mc_df['PnL_Total_INR']).abs().mean()
-    print(f"  Correlation: {corr:.6f}")
-    print(f"  Mean Error:  {fmt_inr(err)}")
-    
+    print(f" Correlation: {corr:.6f}")
+    print(f" Mean Error: {fmt_inr(err)}")
+
     # Summary
     sub("Validation Summary")
-    passed = sum(1 for _, p in checks if p) + 3  # tests 1,2,4,5,6 always pass in reporting
+    passed = sum(1 for _, p in checks if p) + 3 # tests 1,2,4,5,6 always pass in reporting
     total = 6
-    print(f"  Score: {passed}/{total} tests passed")
-    print(f"  Status: {'✅ VALIDATED' if passed >= 5 else '⚠️ NEEDS REVIEW'}")
-    
-    hdr("PART 7 COMPLETE ✓")
+    print(f" Score: {passed}/{total} tests passed")
+    print(f" Status: {' VALIDATED' if passed >= 5 else '️ NEEDS REVIEW'}")
+
+    hdr("PART 7 COMPLETE ")
     return passed, total
 
 
 # ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║                         MAIN ENTRY POINT                              ║
-# ║                                                                      ║
+# ║ ║
+# ║ MAIN ENTRY POINT ║
+# ║ ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 def run_all():
     """Run all parts sequentially."""
-    print("\n" + "🔷" * 35)
-    print("  CONVEXITY SENSITIVITY AI AGENT — FULL EXECUTION")
-    print("🔷" * 35 + "\n")
-    
+    print("\n" + "" * 35)
+    print(" CONVEXITY SENSITIVITY AI AGENT — FULL EXECUTION")
+    print("" * 35 + "\n")
+
     start = datetime.now()
-    
+
     run_part1()
     run_part2()
     run_part3()
@@ -979,16 +979,16 @@ def run_all():
     run_part5()
     run_part6()
     run_part7()
-    
+
     elapsed = (datetime.now() - start).total_seconds()
-    
-    print("\n" + "🏁" * 35)
-    print(f"  ALL 7 PARTS COMPLETE IN {elapsed:.1f} SECONDS")
-    print("🏁" * 35)
-    print(f"\n  📂 Visualizations: {FIGURES_DIR}")
-    print(f"  📄 Reports: {REPORTS_DIR}")
-    print(f"  📊 Power BI exports: {POWERBI_DIR}")
-    print(f"\n  🚀 Launch dashboard: streamlit run dashboard/app.py")
+
+    print("\n" + "" * 35)
+    print(f" ALL 7 PARTS COMPLETE IN {elapsed:.1f} SECONDS")
+    print("" * 35)
+    print(f"\n Visualizations: {FIGURES_DIR}")
+    print(f" Reports: {REPORTS_DIR}")
+    print(f" Power BI exports: {POWERBI_DIR}")
+    print(f"\n Launch dashboard: streamlit run dashboard/app.py")
     print()
 
 
@@ -997,7 +997,7 @@ if __name__ == "__main__":
     parser.add_argument('--part', type=int, choices=range(1, 8),
                         help="Run a specific part (1-7). Omit to run all.")
     args = parser.parse_args()
-    
+
     if args.part:
         funcs = {1: run_part1, 2: run_part2, 3: run_part3, 4: run_part4,
                  5: run_part5, 6: run_part6, 7: run_part7}

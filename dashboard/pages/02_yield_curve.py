@@ -9,8 +9,8 @@ from src.utils import load_bond_portfolio, load_yield_curve
 from src.part2_yield_curve import (NelsonSiegelSvensson, NelsonSiegel, YieldCurveSpline,
                                     compute_portfolio_dv01_ladder, yield_curve_pca)
 
-st.set_page_config(page_title="Yield Curve", page_icon="📉", layout="wide")
-st.title("📉 Yield Curve Modelling & DV01 Sensitivity")
+st.set_page_config(page_title="Yield Curve", page_icon="", layout="wide")
+st.title(" Yield Curve Modelling & DV01 Sensitivity")
 
 yc_df = load_yield_curve()
 bond_df = load_bond_portfolio()
@@ -20,9 +20,9 @@ tab1, tab2, tab3, tab4 = st.tabs(["Yield Curves", "Model Fitting", "DV01 Ladder"
 with tab1:
     pivot = yc_df.pivot_table(values='Yield', index='CurveDate', columns='Tenor_Years')
     dates = sorted(pivot.index.unique())
-    
+
     selected_dates = st.multiselect("Select curve dates", dates, default=dates[-3:] if len(dates) >= 3 else dates)
-    
+
     fig = go.Figure()
     for date in selected_dates:
         row = pivot.loc[date].dropna()
@@ -36,18 +36,18 @@ with tab2:
     latest = yc_df[yc_df['CurveDate'] == latest_date].sort_values('Tenor_Years')
     tenors = latest['Tenor_Years'].values
     yields = latest['Yield'].values
-    
+
     st.markdown(f"**Fitting to latest curve: {str(latest_date)[:10]}**")
-    
+
     nss = NelsonSiegelSvensson()
     nss.fit(tenors, yields)
     ns = NelsonSiegel()
     ns.fit(tenors, yields)
     spline = YieldCurveSpline()
     spline.fit(tenors, yields)
-    
+
     smooth_t = np.linspace(min(tenors), max(tenors), 200)
-    
+
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=tenors, y=yields*100, mode='markers', name='Actual',
                              marker=dict(size=10, color='red')))
@@ -60,7 +60,7 @@ with tab2:
     fig.update_layout(title='Yield Curve Model Fits', xaxis_title='Tenor (Years)',
                       yaxis_title='Yield (%)', height=500)
     st.plotly_chart(fig, use_container_width=True)
-    
+
     st.markdown("**NSS Parameters:**")
     factors = nss.get_factors()
     st.json(factors)
@@ -88,7 +88,7 @@ with tab4:
                                          line=dict(color=colors[i])))
             fig.update_layout(title='PCA Factor Loadings', xaxis_title='Tenor', yaxis_title='Loading', height=400)
             st.plotly_chart(fig, use_container_width=True)
-        
+
         with c2:
             fig = px.bar(x=[f"PC{i+1}" for i in range(len(pca_results['explained_variance_ratio']))],
                          y=pca_results['explained_variance_ratio']*100,

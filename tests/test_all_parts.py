@@ -18,18 +18,18 @@ from src.part1_analytics import BondAnalytics, PortfolioAnalytics
 
 class TestDataLoading:
     """Test data loading functions."""
-    
+
     def test_bond_portfolio_loads(self):
         df = load_bond_portfolio()
         assert len(df) == 300
         assert 'BondID' in df.columns
         assert 'ModifiedDuration' in df.columns
-    
+
     def test_yield_curve_loads(self):
         df = load_yield_curve()
         assert len(df) > 0
         assert 'Yield' in df.columns
-    
+
     def test_monte_carlo_loads(self):
         df = load_monte_carlo()
         assert len(df) == 1000
@@ -38,36 +38,36 @@ class TestDataLoading:
 
 class TestBondAnalytics:
     """Test bond-level calculations."""
-    
+
     def test_duration_positive(self):
         bond = BondAnalytics(100, 0.06, 2, 5, 0.065)
         assert bond.macaulay_duration() > 0
         assert bond.modified_duration() > 0
-    
+
     def test_modified_less_than_macaulay(self):
         bond = BondAnalytics(100, 0.06, 2, 5, 0.065)
         assert bond.modified_duration() <= bond.macaulay_duration()
-    
+
     def test_convexity_positive(self):
         bond = BondAnalytics(100, 0.06, 2, 5, 0.065)
         assert bond.convexity() > 0
-    
+
     def test_dv01_positive(self):
         bond = BondAnalytics(100, 0.06, 2, 5, 0.065)
         assert bond.dv01() > 0
-    
+
     def test_longer_maturity_higher_duration(self):
         short = BondAnalytics(100, 0.06, 2, 2, 0.065)
         long = BondAnalytics(100, 0.06, 2, 20, 0.065)
         assert long.modified_duration() > short.modified_duration()
-    
+
     def test_zero_coupon_highest_duration(self):
         """Zero coupon bond should have duration ≈ maturity."""
         # Use very small coupon as proxy
         zc = BondAnalytics(100, 0.001, 1, 10, 0.065)
         coupon = BondAnalytics(100, 0.08, 2, 10, 0.065)
         assert zc.macaulay_duration() > coupon.macaulay_duration()
-    
+
     def test_accuracy_vs_csv(self):
         """Compare computed vs CSV for sample bonds."""
         df = load_bond_portfolio()
@@ -80,22 +80,22 @@ class TestBondAnalytics:
 
 class TestPortfolioAnalytics:
     """Test portfolio-level calculations."""
-    
+
     def test_portfolio_creates(self):
         df = load_bond_portfolio()
         portfolio = PortfolioAnalytics(df)
         assert portfolio.total_market_value > 0
-    
+
     def test_portfolio_duration_positive(self):
         df = load_bond_portfolio()
         portfolio = PortfolioAnalytics(df)
         assert portfolio.portfolio_duration() > 0
-    
+
     def test_portfolio_convexity_positive(self):
         df = load_bond_portfolio()
         portfolio = PortfolioAnalytics(df)
         assert portfolio.portfolio_convexity() > 0
-    
+
     def test_sensitivity_symmetric(self):
         """Convexity means gain from down shock > loss from up shock."""
         df = load_bond_portfolio()
@@ -105,7 +105,7 @@ class TestPortfolioAnalytics:
         dn_pnl = sens[sens['Shock_bps'] == -100]['Total_PnL_INR'].values[0]
         # Due to convexity: |gain from -100| > |loss from +100|
         assert abs(dn_pnl) > abs(up_pnl)
-    
+
     def test_key_rate_duration(self):
         df = load_bond_portfolio()
         portfolio = PortfolioAnalytics(df)
@@ -115,7 +115,7 @@ class TestPortfolioAnalytics:
 
 class TestYieldCurve:
     """Test yield curve modelling."""
-    
+
     def test_nss_fits(self):
         from src.part2_yield_curve import NelsonSiegelSvensson
         yc_df = load_yield_curve()
@@ -125,19 +125,19 @@ class TestYieldCurve:
         assert nss.fitted
         predicted = nss.predict(latest['Tenor_Years'].values)
         rmse = np.sqrt(np.mean((predicted - latest['Yield'].values)**2))
-        assert rmse < 0.01  # Less than 1% RMSE
+        assert rmse < 0.01 # Less than 1% RMSE
 
 
 class TestMonteCarlo:
     """Test Monte Carlo simulation."""
-    
+
     def test_vasicek_simulates(self):
         from src.part3_monte_carlo import VasicekModel
         model = VasicekModel()
         times, paths = model.simulate(T=1.0, n_paths=100)
         assert paths.shape == (100, 253)
         assert np.all(np.isfinite(paths))
-    
+
     def test_var_positive(self):
         from src.part3_monte_carlo import compute_var_cvar
         mc_df = load_monte_carlo()
@@ -147,7 +147,7 @@ class TestMonteCarlo:
 
 class TestMLModels:
     """Test ML feature engineering."""
-    
+
     def test_feature_engineering(self):
         from src.part4_ml_models import engineer_features
         df = load_bond_portfolio()

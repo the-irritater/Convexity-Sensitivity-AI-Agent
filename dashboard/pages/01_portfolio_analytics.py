@@ -7,8 +7,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.utils import load_bond_portfolio
 from src.part1_analytics import PortfolioAnalytics
 
-st.set_page_config(page_title="Portfolio Analytics", page_icon="📈", layout="wide")
-st.title("📈 Portfolio Duration & Convexity Analytics")
+st.set_page_config(page_title="Portfolio Analytics", page_icon="", layout="wide")
+st.title(" Portfolio Duration & Convexity Analytics")
 
 df = load_bond_portfolio()
 portfolio = PortfolioAnalytics(df)
@@ -62,7 +62,7 @@ with tab4:
     shock_list = list(range(shocks[0], shocks[1]+1, 25))
     shock_list = [s for s in shock_list if s != 0]
     sens = portfolio.price_sensitivity_analysis(shock_list)
-    
+
     fig = go.Figure()
     fig.add_trace(go.Bar(x=sens['Shock_bps'], y=sens['Total_PnL_INR']/1e5, name='Total P&L',
                          marker_color=['#4CAF50' if x > 0 else '#F44336' for x in sens['Total_PnL_INR']]))

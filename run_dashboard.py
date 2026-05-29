@@ -16,10 +16,10 @@ import os
 
 if __name__ == "__main__":
     dashboard_path = os.path.join(os.path.dirname(__file__), "dashboard", "app.py")
-    print("🚀 Launching Convexity Sensitivity AI Agent Dashboard...")
-    print(f"   Dashboard: {dashboard_path}")
-    print("   Press Ctrl+C to stop\n")
-    
+    print(" Launching Convexity Sensitivity AI Agent Dashboard...")
+    print(f" Dashboard: {dashboard_path}")
+    print(" Press Ctrl+C to stop\n")
+
     subprocess.run([
         sys.executable, "-m", "streamlit", "run", dashboard_path,
         "--server.headless=true",

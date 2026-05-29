@@ -42,8 +42,8 @@ Bond Count = COUNTROWS(BondPortfolio)
 **Description:** Market-value weighted average coupon rate
 
 ```dax
-Average Coupon Rate = 
-    SUMX(BondPortfolio, 
+Average Coupon Rate =
+    SUMX(BondPortfolio,
         BondPortfolio[CouponRate] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
 ```
@@ -57,7 +57,7 @@ Average Coupon Rate =
 **Description:** Market-value weighted portfolio modified duration
 
 ```dax
-Portfolio Modified Duration = 
+Portfolio Modified Duration =
     SUMX(BondPortfolio,
         BondPortfolio[ModifiedDuration] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -68,7 +68,7 @@ Portfolio Modified Duration =
 **Description:** Market-value weighted portfolio Macaulay duration
 
 ```dax
-Portfolio Macaulay Duration = 
+Portfolio Macaulay Duration =
     SUMX(BondPortfolio,
         BondPortfolio[MacaulayDuration] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -79,7 +79,7 @@ Portfolio Macaulay Duration =
 **Description:** Duration contribution of current filter context (sector, rating, etc.)
 
 ```dax
-Duration Contribution = 
+Duration Contribution =
     SUMX(BondPortfolio,
         BondPortfolio[ModifiedDuration] * BondPortfolio[MarketValue_INR]
         / CALCULATE([Total Market Value], ALL(BondPortfolio))
@@ -91,7 +91,7 @@ Duration Contribution =
 **Description:** Weighted average effective duration (for bonds with optionality)
 
 ```dax
-Effective Duration = 
+Effective Duration =
     SUMX(BondPortfolio,
         BondPortfolio[EffectiveDuration] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -106,7 +106,7 @@ Effective Duration =
 **Description:** Market-value weighted portfolio convexity
 
 ```dax
-Portfolio Convexity = 
+Portfolio Convexity =
     SUMX(BondPortfolio,
         BondPortfolio[Convexity] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -117,7 +117,7 @@ Portfolio Convexity =
 **Description:** Convexity contribution of filtered subset
 
 ```dax
-Convexity Contribution = 
+Convexity Contribution =
     SUMX(BondPortfolio,
         BondPortfolio[Convexity] * BondPortfolio[MarketValue_INR]
         / CALCULATE([Total Market Value], ALL(BondPortfolio))
@@ -129,7 +129,7 @@ Convexity Contribution =
 **Description:** Weighted average effective convexity
 
 ```dax
-Effective Convexity = 
+Effective Convexity =
     SUMX(BondPortfolio,
         BondPortfolio[EffectiveConvexity] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -144,7 +144,7 @@ Effective Convexity =
 **Description:** Total portfolio DV01 in INR (price change per 1bp yield move)
 
 ```dax
-Portfolio DV01 = 
+Portfolio DV01 =
     SUMX(BondPortfolio,
         BondPortfolio[ModifiedDuration] * BondPortfolio[MarketValue_INR] * 0.0001
     )
@@ -155,7 +155,7 @@ Portfolio DV01 =
 **Description:** DV01 normalized per crore of market value
 
 ```dax
-DV01 per Crore = 
+DV01 per Crore =
     [Portfolio DV01] / ([Total Market Value] / 10000000)
 ```
 
@@ -164,7 +164,7 @@ DV01 per Crore =
 **Description:** DV01 contribution as percentage of total
 
 ```dax
-DV01 Contribution % = 
+DV01 Contribution % =
     DIVIDE(
         SUMX(BondPortfolio, BondPortfolio[ModifiedDuration] * BondPortfolio[MarketValue_INR] * 0.0001),
         CALCULATE(
@@ -184,7 +184,7 @@ DV01 Contribution % =
 **Description:** P&L impact of +50 bps yield shock
 
 ```dax
-PnL Impact +50bps = 
+PnL Impact +50bps =
     SUMX(BondPortfolio,
         BondPortfolio[PriceChange_Up50bps] / 100 * BondPortfolio[MarketValue_INR]
     )
@@ -195,7 +195,7 @@ PnL Impact +50bps =
 **Description:** P&L impact of -50 bps yield shock
 
 ```dax
-PnL Impact -50bps = 
+PnL Impact -50bps =
     SUMX(BondPortfolio,
         BondPortfolio[PriceChange_Dn50bps] / 100 * BondPortfolio[MarketValue_INR]
     )
@@ -206,7 +206,7 @@ PnL Impact -50bps =
 **Description:** P&L impact of +100 bps yield shock
 
 ```dax
-PnL Impact +100bps = 
+PnL Impact +100bps =
     SUMX(BondPortfolio,
         BondPortfolio[PriceChange_Up100bps] / 100 * BondPortfolio[MarketValue_INR]
     )
@@ -217,7 +217,7 @@ PnL Impact +100bps =
 **Description:** P&L impact of -100 bps yield shock
 
 ```dax
-PnL Impact -100bps = 
+PnL Impact -100bps =
     SUMX(BondPortfolio,
         BondPortfolio[PriceChange_Dn100bps] / 100 * BondPortfolio[MarketValue_INR]
     )
@@ -228,7 +228,7 @@ PnL Impact -100bps =
 **Description:** Convexity benefit: asymmetry between up/down shock impact
 
 ```dax
-PnL Asymmetry 100bps = 
+PnL Asymmetry 100bps =
     ABS([PnL Impact -100bps]) - ABS([PnL Impact +100bps])
 ```
 
@@ -237,7 +237,7 @@ PnL Asymmetry 100bps =
 **Description:** Duration-convexity approximation of P&L for selected shock
 
 ```dax
-Duration Approx PnL = 
+Duration Approx PnL =
     VAR ShockBps = SELECTEDVALUE(ShockTable[Shock_bps], 100)
     VAR DeltaY = ShockBps / 10000
     RETURN
@@ -254,7 +254,7 @@ Duration Approx PnL =
 **Description:** Market-value weighted average spread over benchmark
 
 ```dax
-Weighted Avg Spread (bps) = 
+Weighted Avg Spread (bps) =
     SUMX(BondPortfolio,
         BondPortfolio[SpreadOverBenchmark_bps] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -265,7 +265,7 @@ Weighted Avg Spread (bps) =
 **Description:** Weighted average option-adjusted spread
 
 ```dax
-Weighted Avg OAS = 
+Weighted Avg OAS =
     SUMX(BondPortfolio,
         BondPortfolio[OAS_bps] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -276,7 +276,7 @@ Weighted Avg OAS =
 **Description:** Weighted average Z-spread
 
 ```dax
-Weighted Avg Z-Spread = 
+Weighted Avg Z-Spread =
     SUMX(BondPortfolio,
         BondPortfolio[ZSpread_bps] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -291,7 +291,7 @@ Weighted Avg Z-Spread =
 **Description:** Market-value weighted yield to maturity
 
 ```dax
-Portfolio YTM = 
+Portfolio YTM =
     SUMX(BondPortfolio,
         BondPortfolio[YieldToMaturity] * BondPortfolio[MarketValue_INR]
     ) / [Total Market Value]
@@ -302,7 +302,7 @@ Portfolio YTM =
 **Description:** Carry-to-duration efficiency metric
 
 ```dax
-Yield per Unit Duration = 
+Yield per Unit Duration =
     DIVIDE([Portfolio YTM], [Portfolio Modified Duration], 0)
 ```
 
@@ -315,7 +315,7 @@ Yield per Unit Duration =
 **Description:** Historical Value at Risk at 95% confidence
 
 ```dax
-VaR 95% Historical = 
+VaR 95% Historical =
     -PERCENTILE.INC(MonteCarloScenarios[PnL_Total_INR], 0.05)
 ```
 
@@ -324,7 +324,7 @@ VaR 95% Historical =
 **Description:** Expected Shortfall (average loss beyond VaR)
 
 ```dax
-CVaR 95% = 
+CVaR 95% =
     -AVERAGEX(
         FILTER(MonteCarloScenarios,
             MonteCarloScenarios[PnL_Total_INR] <= PERCENTILE.INC(MonteCarloScenarios[PnL_Total_INR], 0.05)
@@ -358,7 +358,7 @@ Max Gain = MAX(MonteCarloScenarios[PnL_Total_INR])
 **Description:** Duration for single selected sector
 
 ```dax
-Selected Sector Duration = 
+Selected Sector Duration =
     IF(HASONEVALUE(BondPortfolio[Sector]),
         [Portfolio Modified Duration],
         BLANK()
@@ -370,7 +370,7 @@ Selected Sector Duration =
 **Description:** Weight of current sector in total portfolio
 
 ```dax
-Sector Weight = 
+Sector Weight =
     DIVIDE(
         SUM(BondPortfolio[MarketValue_INR]),
         CALCULATE(SUM(BondPortfolio[MarketValue_INR]), ALL(BondPortfolio[Sector])),
@@ -383,9 +383,9 @@ Sector Weight =
 **Description:** Duration contribution for selected credit rating bucket
 
 ```dax
-Rating Bucket Duration = 
+Rating Bucket Duration =
     SUMX(BondPortfolio,
-        BondPortfolio[ModifiedDuration] 
+        BondPortfolio[ModifiedDuration]
         * DIVIDE(BondPortfolio[MarketValue_INR], CALCULATE(SUM(BondPortfolio[MarketValue_INR]), ALLSELECTED(BondPortfolio)), 0)
     )
 ```

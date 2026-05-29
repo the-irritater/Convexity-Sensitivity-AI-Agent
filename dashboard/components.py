@@ -3,7 +3,7 @@
 import streamlit as st
 
 
-def metric_card(title, value, icon="📊"):
+def metric_card(title, value, icon=""):
     """Render a styled metric card."""
     st.markdown(f"""
     <div class="metric-card">

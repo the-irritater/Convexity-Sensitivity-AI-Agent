@@ -1,8 +1,8 @@
-# Convexity Sensitivity AI Agent 🏦
+# Convexity Sensitivity AI Agent
 
 A comprehensive AI-powered bond analytics platform for duration, convexity, and DV01 sensitivity analysis with ML-powered predictions and gamified training.
 
-## 📋 Project Overview
+## Project Overview
 
 This platform provides end-to-end fixed income analytics for an INR bond portfolio (300 bonds), including:
 
@@ -14,7 +14,7 @@ This platform provides end-to-end fixed income analytics for an INR bond portfol
 - **Part 6**: Bond Risk Lab — gamified simulation platform for training
 - **Part 7**: Multi-scenario validation across yield curve shocks
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 ```bash
@@ -54,41 +54,41 @@ python3 run_dashboard.py
 python3 -m pytest tests/ -v
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Project 2/
-├── bond_portfolio_data.csv          # 300 INR bonds with 44 columns
-├── yield_curve_history.csv          # Historical yield curves (264 records)
-├── monte_carlo_scenarios.csv        # 1000 MC scenarios with P&L
-├── convexity_agent_complete.py      # ⭐ Single-file version (all 7 parts)
-├── run_dashboard.py                 # Dashboard launcher
-├── requirements.txt                 # Python dependencies
-├── README.md                        # This file
+├── bond_portfolio_data.csv # 300 INR bonds with 44 columns
+├── yield_curve_history.csv # Historical yield curves (264 records)
+├── monte_carlo_scenarios.csv # 1000 MC scenarios with P&L
+├── convexity_agent_complete.py # ⭐ Single-file version (all 7 parts)
+├── run_dashboard.py # Dashboard launcher
+├── requirements.txt # Python dependencies
+├── README.md # This file
 ├── src/
-│   ├── part1_analytics.py           # Duration & convexity framework
-│   ├── part2_yield_curve.py         # Yield curve modelling & DV01
-│   ├── part2_yield_curve.R          # R implementation
-│   ├── part3_monte_carlo.py         # Monte Carlo & VaR
-│   ├── part4_ml_models.py           # ML prediction models
-│   ├── part5_dax_measures.py        # Power BI DAX measures
-│   ├── part6_bond_risk_lab.py       # Gamified platform
-│   ├── part7_validation.py          # Validation suite
-│   └── utils.py                     # Shared utilities
+│ ├── part1_analytics.py # Duration & convexity framework
+│ ├── part2_yield_curve.py # Yield curve modelling & DV01
+│ ├── part2_yield_curve.R # R implementation
+│ ├── part3_monte_carlo.py # Monte Carlo & VaR
+│ ├── part4_ml_models.py # ML prediction models
+│ ├── part5_dax_measures.py # Power BI DAX measures
+│ ├── part6_bond_risk_lab.py # Gamified platform
+│ ├── part7_validation.py # Validation suite
+│ └── utils.py # Shared utilities
 ├── dashboard/
-│   ├── app.py                       # Streamlit main page
-│   └── pages/                       # Dashboard sub-pages (6 pages)
+│ ├── app.py # Streamlit main page
+│ └── pages/ # Dashboard sub-pages (6 pages)
 ├── outputs/
-│   ├── figures/                     # Generated charts
-│   ├── reports/                     # CSV analysis reports
-│   └── powerbi_exports/             # Power BI data files
+│ ├── figures/ # Generated charts
+│ ├── reports/ # CSV analysis reports
+│ └── powerbi_exports/ # Power BI data files
 ├── tests/
-│   └── test_all_parts.py            # Test suite
+│ └── test_all_parts.py # Test suite
 └── docs/
-    └── DAX_measures.md              # Power BI DAX reference
+    └── DAX_measures.md # Power BI DAX reference
 ```
 
-## 🔑 Key Technical Details
+## Key Technical Details
 
 ### Bond Analytics (Part 1)
 - Duration computed from **first principles** using cashflow discounting
@@ -121,7 +121,7 @@ Project 2/
 - **8 achievement badges** and ranking system
 - **4 risk profiles** (Conservative to Barbell)
 
-## 📊 Data Description
+## Data Description
 
 | Column | Description |
 |--------|------------|
@@ -131,7 +131,7 @@ Project 2/
 | PriceChange_Up/Dn | Pre-computed shock impacts |
 | KeyRateBucket | Tenor classification for KRD |
 
-## 🔧 Technology Stack
+## Technology Stack
 
 - **Python 3.13** — Core language
 - **NumPy/Pandas/SciPy** — Data processing & scientific computing
@@ -142,6 +142,6 @@ Project 2/
 - **Streamlit** — Interactive dashboard
 - **R** — Alternative implementation (Part 2)
 
-## 📜 License
+## License
 
 STRICTLY PRIVATE & CONFIDENTIAL — All work remains property of Zetheta Algorithms Private Limited.

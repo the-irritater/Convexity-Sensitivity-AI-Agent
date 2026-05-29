@@ -9,8 +9,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 from src.utils import load_bond_portfolio, load_monte_carlo
 from src.part3_monte_carlo import (VasicekModel, CIRModel, compute_var_cvar, run_stress_tests)
 
-st.set_page_config(page_title="Monte Carlo", page_icon="🎲", layout="wide")
-st.title("🎲 Monte Carlo Simulation & Risk Analysis")
+st.set_page_config(page_title="Monte Carlo", page_icon="", layout="wide")
+st.title(" Monte Carlo Simulation & Risk Analysis")
 
 bond_df = load_bond_portfolio()
 mc_df = load_monte_carlo()
@@ -31,14 +31,14 @@ with tab1:
         n_paths = st.slider("Number of Paths", 100, 5000, 1000)
     with col3:
         horizon = st.slider("Horizon (Years)", 0.5, 5.0, 2.0, 0.5)
-    
+
     if model_type == "Vasicek":
         model = VasicekModel(kappa=0.5, theta=0.065, sigma=0.01, r0=0.065)
     else:
         model = CIRModel(kappa=0.5, theta=0.065, sigma=0.05, r0=0.065)
-    
+
     times, paths = model.simulate(T=horizon, n_steps=int(252*horizon), n_paths=n_paths, seed=42)
-    
+
     fig = go.Figure()
     for i in range(min(30, n_paths)):
         fig.add_trace(go.Scatter(x=times, y=paths[i]*100, mode='lines', opacity=0.15,
@@ -62,7 +62,7 @@ with tab2:
                        labels={'PnL_Total_INR': 'P&L (INR)'}, color_discrete_sequence=['#2196F3'])
     fig.update_layout(height=500)
     st.plotly_chart(fig, use_container_width=True)
-    
+
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Mean P&L", f"₹{mc_df['PnL_Total_INR'].mean()/1e5:.1f}L")
     c2.metric("Std Dev", f"₹{mc_df['PnL_Total_INR'].std()/1e5:.1f}L")
@@ -72,9 +72,9 @@ with tab2:
 with tab3:
     st.markdown("### Value at Risk & Expected Shortfall")
     var_results = compute_var_cvar(mc_df['PnL_Total_INR'].values)
-    
+
     st.dataframe(var_results, use_container_width=True, hide_index=True)
-    
+
     fig = go.Figure()
     fig.add_trace(go.Histogram(x=mc_df['PnL_Total_INR']/1e5, nbinsx=50, name='P&L',
                                 marker_color='#2196F3', opacity=0.7))
@@ -89,7 +89,7 @@ with tab3:
 with tab4:
     st.markdown("### Predefined Stress Test Scenarios")
     stress = run_stress_tests(port_dur, port_conv, total_mv)
-    
+
     fig = px.bar(stress, x='Total_PnL_INR', y='Scenario', orientation='h',
                  color='Total_PnL_INR', color_continuous_scale='RdYlGn',
                  title='Stress Test Results', text='PnL_Pct')

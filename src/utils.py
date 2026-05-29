@@ -75,13 +75,13 @@ def discount_factor(rate, t):
 def present_value_cashflows(cashflows, times, ytm):
     """
     Calculate present value of a series of cashflows.
-    
+
     Parameters
     ----------
     cashflows : array-like — Cash flow amounts
     times : array-like — Time to each cash flow (in years)
     ytm : float — Yield to maturity (annualized, decimal)
-    
+
     Returns
     -------
     float — Total present value
@@ -95,31 +95,31 @@ def present_value_cashflows(cashflows, times, ytm):
 def generate_bond_cashflows(face_value, coupon_rate, coupon_freq, years_to_maturity):
     """
     Generate cashflow schedule for a fixed-rate bond.
-    
+
     Parameters
     ----------
     face_value : float — Face/par value
     coupon_rate : float — Annual coupon rate (decimal)
     coupon_freq : int — Number of coupon payments per year
     years_to_maturity : float — Years until maturity
-    
+
     Returns
     -------
     tuple — (cashflows, times) arrays
     """
     period_coupon = face_value * coupon_rate / coupon_freq
     n_periods = int(np.ceil(years_to_maturity * coupon_freq))
-    
+
     if n_periods <= 0:
         return np.array([face_value]), np.array([years_to_maturity])
-    
+
     times = np.array([(i + 1) / coupon_freq for i in range(n_periods)])
     # Adjust last time to exactly match maturity
     times[-1] = min(times[-1], years_to_maturity)
-    
+
     cashflows = np.full(n_periods, period_coupon)
-    cashflows[-1] += face_value  # Principal repayment at maturity
-    
+    cashflows[-1] += face_value # Principal repayment at maturity
+
     return cashflows, times
 
 
@@ -150,12 +150,12 @@ def fmt_inr(value, decimals=0):
 def print_section_header(title, char="═", width=70):
     """Print a formatted section header."""
     print(f"\n{char * width}")
-    print(f"  {title}")
+    print(f" {title}")
     print(f"{char * width}\n")
 
 
 def print_subsection(title, char="─", width=50):
     """Print a formatted subsection header."""
-    print(f"\n  {char * width}")
-    print(f"  {title}")
-    print(f"  {char * width}\n")
+    print(f"\n {char * width}")
+    print(f" {title}")
+    print(f" {char * width}\n")
