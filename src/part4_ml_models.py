@@ -476,6 +476,9 @@ def plot_model_comparison(metrics_list, save_path=None):
 
 def plot_learning_curve(history, save_path=None):
     """Plot Neural Network training history."""
+    if history is None or not hasattr(history, 'history'):
+        print("  ⚠️ Training history not available (fallback MLP or training failed), skipping learning curve plot.")
+        return None
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
     # Loss

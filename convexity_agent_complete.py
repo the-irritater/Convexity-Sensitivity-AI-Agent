@@ -67,7 +67,7 @@ warnings.filterwarnings('ignore')
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 PROJECT_ROOT = Path(__file__).resolve().parent
-DATA_DIR = PROJECT_ROOT
+DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 FIGURES_DIR = OUTPUT_DIR / "figures"
 REPORTS_DIR = OUTPUT_DIR / "reports"
@@ -953,6 +953,13 @@ def run_part7():
     total = 6
     print(f" Score: {passed}/{total} tests passed")
     print(f" Status: {' VALIDATED' if passed >= 5 else '️ NEEDS REVIEW'}")
+
+    # Generate Excel Validation Workbook (Deliverable 5)
+    try:
+        from src.generate_validation_workbook import create_validation_workbook
+        create_validation_workbook()
+    except Exception as e:
+        print(f" Failed to generate Excel validation workbook: {e}")
 
     hdr("PART 7 COMPLETE ")
     return passed, total

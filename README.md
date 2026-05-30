@@ -42,6 +42,18 @@ python3 -c "from src.part6_bond_risk_lab import run_part6; run_part6()"
 python3 -c "from src.part7_validation import run_validation; run_validation()"
 ```
 
+### Additional Analysis Modules
+```bash
+# SHAP Explainability
+python3 -c "from src.shap_explainability import run_shap_analysis; run_shap_analysis()"
+
+# ML vs Analytical Sensitivity Analysis
+python3 -c "from src.sensitivity_analysis import run_sensitivity_analysis; run_sensitivity_analysis()"
+
+# VaR Backtesting with Kupiec POF Test
+python3 -c "from src.var_backtest import run_var_backtest; run_var_backtest()"
+```
+
 ### Launch Interactive Dashboard
 ```bash
 streamlit run dashboard/app.py
@@ -52,40 +64,61 @@ python3 run_dashboard.py
 ### Run Tests
 ```bash
 python3 -m pytest tests/ -v
+python3 -m pytest tests/ -v --cov=src --cov-report=term-missing
+```
+
+### Docker
+```bash
+# Start dashboard
+docker-compose up --build
+
+# Run analytics (one-shot)
+docker-compose --profile analytics up analytics
 ```
 
 ## Project Structure
 
 ```
 Project 2/
-├── bond_portfolio_data.csv # 300 INR bonds with 44 columns
-├── yield_curve_history.csv # Historical yield curves (264 records)
-├── monte_carlo_scenarios.csv # 1000 MC scenarios with P&L
-├── convexity_agent_complete.py # ⭐ Single-file version (all 7 parts)
-├── run_dashboard.py # Dashboard launcher
-├── requirements.txt # Python dependencies
-├── README.md # This file
+├── data/
+│   ├── bond_portfolio_data.csv       # 300 INR bonds with 44 columns
+│   ├── yield_curve_history.csv       # Historical yield curves (264 records)
+│   └── monte_carlo_scenarios.csv     # 1000 MC scenarios with P&L
+├── convexity_agent_complete.py       # ⭐ Single-file version (all 7 parts)
+├── run_dashboard.py                  # Dashboard launcher
+├── requirements.txt                  # Python dependencies
+├── Dockerfile                        # Docker build configuration
+├── docker-compose.yml                # Docker Compose services
+├── LICENSE                           # Zetheta IP attribution
+├── .env.example                      # Environment variable template
+├── README.md                         # This file
 ├── src/
-│ ├── part1_analytics.py # Duration & convexity framework
-│ ├── part2_yield_curve.py # Yield curve modelling & DV01
-│ ├── part2_yield_curve.R # R implementation
-│ ├── part3_monte_carlo.py # Monte Carlo & VaR
-│ ├── part4_ml_models.py # ML prediction models
-│ ├── part5_dax_measures.py # Power BI DAX measures
-│ ├── part6_bond_risk_lab.py # Gamified platform
-│ ├── part7_validation.py # Validation suite
-│ └── utils.py # Shared utilities
+│   ├── part1_analytics.py            # Duration & convexity framework
+│   ├── part2_yield_curve.py          # Yield curve modelling & DV01
+│   ├── part2_yield_curve.R           # R implementation (yield curve)
+│   ├── part3_monte_carlo.py          # Monte Carlo & VaR
+│   ├── part4_ml_models.py            # ML prediction models
+│   ├── part5_dax_measures.py         # Power BI DAX measures (42 measures)
+│   ├── part6_bond_risk_lab.py        # Gamified platform
+│   ├── part7_validation.py           # Validation suite
+│   ├── shap_explainability.py        # SHAP analysis for best model
+│   ├── sensitivity_analysis.py       # ML vs analytical sensitivity
+│   ├── var_backtest.py               # VaR backtesting (Kupiec POF)
+│   ├── duration_convexity_analysis.R # R: GBM/XGBoost/H2O models
+│   ├── sensitivity_visualization.R   # R: ggplot2 sensitivity charts
+│   └── utils.py                      # Shared utilities
 ├── dashboard/
-│ ├── app.py # Streamlit main page
-│ └── pages/ # Dashboard sub-pages (6 pages)
+│   ├── app.py                        # Streamlit main page
+│   └── pages/                        # Dashboard sub-pages (6 pages)
 ├── outputs/
-│ ├── figures/ # Generated charts
-│ ├── reports/ # CSV analysis reports
-│ └── powerbi_exports/ # Power BI data files
+│   ├── figures/                      # Generated charts
+│   ├── reports/                      # CSV analysis reports
+│   └── powerbi_exports/              # Power BI data files
 ├── tests/
-│ └── test_all_parts.py # Test suite
+│   └── test_all_parts.py             # Test suite (>60% coverage)
 └── docs/
-    └── DAX_measures.md # Power BI DAX reference
+    ├── DAX_measures.md               # Power BI DAX reference (42 measures)
+    └── project_documentation.md      # Technical documentation
 ```
 
 ## Key Technical Details
@@ -103,23 +136,35 @@ Project 2/
 ### Monte Carlo (Part 3)
 - **Vasicek** and **CIR** short-rate model simulation (5000 paths)
 - **VaR** at 90%, 95%, 99% confidence levels
-- Stress testing across 9 historical/hypothetical scenarios
+- Stress testing across 10 historical/hypothetical scenarios
 
 ### ML Models (Part 4)
-- **23 engineered features** from bond characteristics
+- **27 engineered features** from bond characteristics
 - **Random Forest**, **XGBoost**, **Neural Network** (TF/Keras)
 - **Ensemble** model combining all three
+- **SHAP** explainability with summary, dependence, and force plots
 - Expected R² > 0.99 (convexity is highly predictable from fundamentals)
 
+### Sensitivity Analysis (Day 9)
+- **50 yield perturbations** (-200bps to +200bps)
+- ML-predicted vs analytical price change comparison
+- Ensemble model outperformance analysis
+
 ### Power BI (Part 5)
-- **12 DAX measure formulas** ready to paste into Power BI
+- **42 DAX measure formulas** ready to paste into Power BI
 - **6 CSV exports** formatted for Power BI import
+- **What-If parameter** for yield change slider (-300bps to +300bps)
 
 ### Bond Risk Lab (Part 6)
 - **Scenario challenges** with scoring
 - **10 quiz questions** with explanations
 - **8 achievement badges** and ranking system
 - **4 risk profiles** (Conservative to Barbell)
+
+### VaR Backtesting
+- **Kupiec POF test** for VaR model adequacy
+- **Basel II traffic light test** classification
+- **Parametric vs Historical vs Cornish-Fisher** VaR comparison
 
 ## Data Description
 
@@ -137,10 +182,12 @@ Project 2/
 - **NumPy/Pandas/SciPy** — Data processing & scientific computing
 - **Scikit-learn** — Random Forest, PCA, preprocessing
 - **XGBoost** — Gradient boosted trees
-- **TensorFlow/Keras** — Neural network
+- **TensorFlow/Keras** — Neural network (optional, sklearn fallback)
+- **SHAP** — Model explainability
 - **Matplotlib/Seaborn/Plotly** — Visualization
 - **Streamlit** — Interactive dashboard
-- **R** — Alternative implementation (Part 2)
+- **R** — Alternative implementation (GBM, XGBoost, H2O, ggplot2)
+- **Docker** — Containerized deployment
 
 ## License
 

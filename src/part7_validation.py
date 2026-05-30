@@ -263,7 +263,7 @@ def validate_shock_scenarios(df):
     print(f" {'-'*8}-+-{'-'*14}-+-{'-'*14}-+-{'-'*12}-+-{'-'*8}-+-{'-'*8}")
 
     for _, row in res_df.iterrows():
-        print(f" {row['Shock_bps']:+4d} bps | "
+        print(f" {int(row['Shock_bps']):+4d} bps | "
               f"₹{row['Duration_Only_PnL']/1e5:+10.1f}L | "
               f"₹{row['Duration_Convexity_PnL']/1e5:+10.1f}L | "
               f"₹{row['Convexity_Adjustment']/1e5:+8.1f}L | "

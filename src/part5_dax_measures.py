@@ -283,6 +283,99 @@ DAX_MEASURES = {
     )''',
         "description": "Duration contribution for selected credit rating bucket"
     },
+
+    # ── What-If Parameter Measures ──
+    "What-If Yield Change": {
+        "category": "What-If Parameters",
+        "formula": '''What-If Yield Change =
+    SELECTEDVALUE(YieldChangeParameter[Yield Change Value], 0)''',
+        "description": "Selected yield change from What-If parameter slider (-300bps to +300bps)"
+    },
+    "What-If PnL Impact": {
+        "category": "What-If Parameters",
+        "formula": '''What-If PnL Impact =
+    VAR DeltaY = [What-If Yield Change] / 10000
+    RETURN
+    -[Portfolio Modified Duration] * DeltaY * [Total Market Value]
+        + 0.5 * [Portfolio Convexity] * POWER(DeltaY, 2) * [Total Market Value]''',
+        "description": "Real-time P&L estimate from What-If yield change slider"
+    },
+    "What-If PnL Pct": {
+        "category": "What-If Parameters",
+        "formula": '''What-If PnL % =
+    DIVIDE([What-If PnL Impact], [Total Market Value], 0) * 100''',
+        "description": "What-If P&L as percentage of portfolio value"
+    },
+
+    # ── Scenario Analysis Measures ──
+    "Scenario PnL Duration Only": {
+        "category": "Scenario Analysis",
+        "formula": '''Scenario PnL Duration Only =
+    VAR ShockBps = SELECTEDVALUE(ShockTable[Shock_bps], 100)
+    VAR DeltaY = ShockBps / 10000
+    RETURN -[Portfolio Modified Duration] * DeltaY * [Total Market Value]''',
+        "description": "Duration-only P&L estimate for selected scenario"
+    },
+    "Convexity Adjustment": {
+        "category": "Scenario Analysis",
+        "formula": '''Convexity Adjustment =
+    VAR ShockBps = SELECTEDVALUE(ShockTable[Shock_bps], 100)
+    VAR DeltaY = ShockBps / 10000
+    RETURN 0.5 * [Portfolio Convexity] * POWER(DeltaY, 2) * [Total Market Value]''',
+        "description": "Convexity correction term for selected shock"
+    },
+    "Convexity Benefit Ratio": {
+        "category": "Scenario Analysis",
+        "formula": '''Convexity Benefit % =
+    VAR DurPnL = ABS([Scenario PnL Duration Only])
+    RETURN DIVIDE([Convexity Adjustment], DurPnL, 0) * 100''',
+        "description": "Convexity adjustment as percentage of duration effect"
+    },
+
+    # ── Contribution Analysis ──
+    "Currency Weight": {
+        "category": "Contribution Analysis",
+        "formula": '''Currency Weight =
+    DIVIDE(
+        SUM(BondPortfolio[MarketValue_INR]),
+        CALCULATE(SUM(BondPortfolio[MarketValue_INR]), ALL(BondPortfolio[Currency])),
+        0
+    )''',
+        "description": "Weight of current currency in total portfolio"
+    },
+    "Maturity Bucket Count": {
+        "category": "Contribution Analysis",
+        "formula": '''Maturity Bucket Count =
+    COUNTROWS(FILTER(BondPortfolio, BondPortfolio[KeyRateBucket] = SELECTEDVALUE(BondPortfolio[KeyRateBucket])))''',
+        "description": "Number of bonds in selected maturity bucket"
+    },
+    "Avg Maturity Years": {
+        "category": "Contribution Analysis",
+        "formula": '''Avg Maturity (Yrs) =
+    SUMX(BondPortfolio,
+        BondPortfolio[YearsToMaturity] * BondPortfolio[MarketValue_INR]
+    ) / [Total Market Value]''',
+        "description": "Market-value weighted average years to maturity"
+    },
+
+    # ── ML Model Comparison ──
+    "VaR 99% Historical": {
+        "category": "Risk Metrics",
+        "formula": '''VaR 99% Historical =
+    -PERCENTILE.INC(MonteCarloScenarios[PnL_Total_INR], 0.01)''',
+        "description": "Historical Value at Risk at 99% confidence"
+    },
+    "CVaR 99% Expected Shortfall": {
+        "category": "Risk Metrics",
+        "formula": '''CVaR 99% =
+    -AVERAGEX(
+        FILTER(MonteCarloScenarios,
+            MonteCarloScenarios[PnL_Total_INR] <= PERCENTILE.INC(MonteCarloScenarios[PnL_Total_INR], 0.01)
+        ),
+        MonteCarloScenarios[PnL_Total_INR]
+    )''',
+        "description": "Expected Shortfall at 99% confidence"
+    },
 }
 
 

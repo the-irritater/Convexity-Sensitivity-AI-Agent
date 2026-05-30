@@ -19,8 +19,8 @@ cat("=== Part 2 (R): Yield Curve Modelling & DV01 ===\n\n")
 
 # ---- Load Data ----
 cat("Loading data...\n")
-bonds <- read_csv(file.path(PARENT_DIR, "bond_portfolio_data.csv"), show_col_types = FALSE)
-yc <- read_csv(file.path(PARENT_DIR, "yield_curve_history.csv"), show_col_types = FALSE)
+bonds <- read_csv(file.path(PARENT_DIR, "data", "bond_portfolio_data.csv"), show_col_types = FALSE)
+yc <- read_csv(file.path(PARENT_DIR, "data", "yield_curve_history.csv"), show_col_types = FALSE)
 
 cat(sprintf(" Bonds: %d records\n", nrow(bonds)))
 cat(sprintf(" Yield Curve: %d records\n", nrow(yc)))

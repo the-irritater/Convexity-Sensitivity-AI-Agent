@@ -51,3 +51,48 @@ env/
 
 # Local logs
 *.log
+
+# Environment variables (never commit actual .env)
+.env
+
+# MLflow experiment tracking
+mlruns/
+mlartifacts/
+
+# Model artifacts
+*.h5
+*.pkl
+*.joblib
+*.onnx
+saved_models/
+
+# TensorFlow / Keras
+tensorflow_logs/
+.keras/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# DVC
+.dvc/cache
+.dvc/tmp
+
+# Sphinx build output
+docs/_build/
+
+# Pytest coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Outputs
+outputs/
+
+# Data files
+*.csv
+data/*.csv
+
+# Project Guide PDF
+project guide/
+
+

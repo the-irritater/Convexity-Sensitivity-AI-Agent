@@ -7,6 +7,12 @@ scipy>=1.10.0
 scikit-learn>=1.3.0
 xgboost>=2.0.0
 
+# Deep Learning (optional — sklearn fallback available)
+# tensorflow>=2.14.0
+
+# Explainability
+shap>=0.42.0
+
 # Visualization
 matplotlib>=3.7.0
 seaborn>=0.12.0
@@ -17,3 +23,7 @@ streamlit>=1.28.0
 
 # Utilities
 openpyxl>=3.1.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
